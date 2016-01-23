@@ -1,0 +1,12 @@
+<ion-view view-title="Browse Stores">
+  <ion-header-bar class="bar bar-subheader">
+	<ion-list>
+		<ion-item ng-repeat="store in stores" href="#/stores/{{store._id}}">
+			<h2>{{store.store.store_name}}</h2>
+			<p>{{store.store.description}}</p>
+			<p>{{store.store.store_address}}</p>
+			<p>{{store.store.postal_code}}</p>
+		</ion-item>
+	</ion-list>
+  </ion-header-bar>
+</ion-view>
