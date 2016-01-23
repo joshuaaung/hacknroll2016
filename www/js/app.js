@@ -62,24 +62,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   .state('tab.items', {
-      url: '/items',
-      views: {
-        'tab-items': {
-          templateUrl: 'templates/tab-items.html',
-          controller: 'ItemsCtrl'
-        }
+    url: '/items',
+    views: {
+      'tab-items': {
+        templateUrl: 'templates/tab-items.html',
+        controller: 'ItemsCtrl'
       }
-    })
-    .state('tab.item-detail', {
-      url: '/items/:itemId',
-      views: {
-        'tab-items': {
-          templateUrl: 'templates/item-detail.html',
-          controller: 'ItemDetailCtrl'
-        }
+    }
+  })
+  .state('tab.item-detail', {
+    url: '/items/:itemId',
+    views: {
+      'tab-items': {
+        templateUrl: 'templates/item-detail.html',
+        controller: 'ItemDetailCtrl'
       }
-    })
-
+    }
+  })
   .state('tab.account', {
     url: '/account',
     views: {
@@ -89,19 +88,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-
-  .state('tab.list', {
+  
+  .state('list', {
     url: '/list',
-    views: {
+    controller: 'ListCtrl',
+    templateUrl: 'templates/tab-list.html'
+    /*views: {
       'tab-list': {
         templateUrl: 'templates/tab-list.html',
         controller: 'ListCtrl'
       }
-    }
+    }*/
   });
 
   // if none of the above states are matched, use this as the fallback
   //This is also a way to set the first page when the app launches
-  $urlRouterProvider.otherwise('/login'); 
+  $urlRouterProvider.otherwise('/list'); 
 
 });
