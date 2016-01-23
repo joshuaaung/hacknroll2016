@@ -96,6 +96,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
     /*adding new item into the browse list*/
     var json = JSON.stringify({
+            user_id: 1,
             product_name: data.name,
             product_brand: data.desc,
             sku: 1234567890,
