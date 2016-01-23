@@ -23,6 +23,10 @@
                         {
                             "xml": "<preference name=\"CameraUsesGeolocation\" value=\"false\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -32,6 +36,12 @@
                     "NSLocationWhenInUseUsageDescription": [
                         {
                             "xml": "<string />",
+                            "count": 1
+                        }
+                    ],
+                    "UIBackgroundModes": [
+                        {
+                            "xml": "<array><string>remote-notification</string></array>",
                             "count": 1
                         }
                     ]
@@ -47,6 +57,9 @@
             "PACKAGE_NAME": "com.ionicframework.chats651108"
         },
         "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.chats651108"
+        },
+        "phonegap-plugin-push": {
             "PACKAGE_NAME": "com.ionicframework.chats651108"
         }
     },
@@ -100,11 +113,20 @@
             "clobbers": [
                 "CameraPopoverHandle"
             ]
+        },
+        {
+            "file": "plugins/phonegap-plugin-push/www/push.js",
+            "id": "phonegap-plugin-push.PushNotification",
+            "pluginId": "phonegap-plugin-push",
+            "clobbers": [
+                "PushNotification"
+            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-splashscreen": "3.1.0",
         "cordova-plugin-inappbrowser": "1.2.0",
-        "cordova-plugin-camera": "2.1.0"
+        "cordova-plugin-camera": "2.1.0",
+        "phonegap-plugin-push": "1.5.3"
     }
 }

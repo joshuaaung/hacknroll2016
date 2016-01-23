@@ -15,6 +15,9 @@
         },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.chats651108"
+        },
+        "phonegap-plugin-push": {
+            "PACKAGE_NAME": "com.ionicframework.chats651108"
         }
     },
     "dependent_plugins": {}

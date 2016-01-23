@@ -48,6 +48,14 @@ module.exports = [
         "clobbers": [
             "CameraPopoverHandle"
         ]
+    },
+    {
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "id": "phonegap-plugin-push.PushNotification",
+        "pluginId": "phonegap-plugin-push",
+        "clobbers": [
+            "PushNotification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -55,7 +63,8 @@ module.exports.metadata =
 {
     "cordova-plugin-splashscreen": "3.1.0",
     "cordova-plugin-inappbrowser": "1.2.0",
-    "cordova-plugin-camera": "2.1.0"
+    "cordova-plugin-camera": "2.1.0",
+    "phonegap-plugin-push": "1.5.3"
 }
 // BOTTOM OF METADATA
 });

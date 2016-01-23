@@ -19,12 +19,13 @@
             <input type="number" placeholder="Deal/Price" ng-model="data.price">
           </label>
           <label class="item item-input">
-            <input type="text" placeholder="Location" ng-model="data.location">
+            <select id="stores">
+            </select>
           </label>
 
         </div>
         <button ng-click="getPhoto()" class="button button-block button-primary">
-          Take Photo la
+          Take Photo
         </button>
         <button class="button button-block button-positive" type="submit">
           Add Item
