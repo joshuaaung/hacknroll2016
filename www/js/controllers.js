@@ -91,6 +91,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
                     ($scope.datepickerObject["inputDate"].getMonth() + 1) + "-" + 
                      $scope.datepickerObject["inputDate"].getDate();
     
+    var stores = document.getElementById("stores");
+    var storeid = stores.options[stores.selectedIndex].id;
+
     /*adding new item into the browse list*/
     var json = JSON.stringify({
             product_name: data.name,
@@ -101,7 +104,8 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
             sale_price: data.price,
             expire_date: bestBefore,
             start_date: bestBefore,
-            end_date: bestBefore
+            end_date: bestBefore,
+            store_id: storeid
         });
 
     $http({
@@ -114,15 +118,39 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     console.log("success", response);
     // this callback will be called asynchronously
     // when the response is available
-  }, function errorCallback(response) {
+    }, function errorCallback(response) {
     console.log("fail");
     // called asynchronously if an error occurs
     // or server returns response with an error status.
-  });
+    });
 
     //$http.post("", json);
     //Items.set(0 , item);
   };
+
+  $scope.$on('$ionicView.enter', function(e) {
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/user/store/1';
+    $http({ 
+      method: 'GET', 
+      url: url
+    }).then(function successCallback(resp) {
+      console.log(resp);
+      var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+      var jsonObject = JSON.parse(jsonString);
+      console.log(jsonObject.stores);
+      $scope.items = jsonObject.stores;
+
+      var select = document.getElementById("stores");
+      for(var i=0; i<jsonObject.stores.length; i++) {
+        var store = document.createElement("option");
+        store.id = jsonObject.stores[i].store._id;
+        store.innerHTML = jsonObject.stores[i].store.store_name;
+        select.appendChild(store);
+      }
+    }, function errorCallback(resp) {
+      console.log('Fail', resp);
+    });
+  });
 
   $scope.reset = function () {
     Items.removeAll();
