@@ -6,9 +6,52 @@
 -->
 <ion-view view-title="{{item.name}}">
   <ion-content class="padding">
-    <img ng-src="{{item.image}}" style="width: 64px; height: 64px">
-    <p>
-      {{item.description}}
-    </p>
+    <div class="row">
+      <div class="col">
+        <img ng-src="{{item.image}}" style="width: 100px; height: 100px" ng-click="showImage({{item.id}})">
+      </div><!--col-->
+      <div class="col col-67">
+        <label class="item-wrapper">
+          <i class="icon ion-pricetag"></i>
+          <span class="item-content">{{item.description}}</span>
+        </label><br/>
+        <label class="item-wrapper">
+          <i class="icon ion-cash"></i>
+          <span class="item-content">{{item.price | currency: "S$"}}</span>
+        </label><br>
+        <label class="item-wrapper">
+          <i class="icon ion-location"></i>
+          <span class="item-content">{{item.location}}</span>
+        </label>
+      </div><!--col-67-->
+    </div><!--row-->
+
+    <div class="row">
+      <div class="col col-10">
+        <button class="button button-balanced icon ion-ios-minus-outline" ng-click="decreaseItem()"></button>
+      </div><!--col-10-->
+      <div class="col col-75">
+        <label class="item-wrapper">
+          <input readonly="true" type="number" style="width:110%; text-align:center; padding:0" placeholder="Qty" ng-model="item.quantity">
+        </label>
+      </div><!--col-75-->
+      <div class="col col-10">
+        <button class="button button-balanced icon ion-ios-plus-outline" ng-click="increaseItem()"></button>
+      </div><!--col-10-->
+    </div><!--row-->
+
+    <div class="row">
+      <div class="col col-50">
+        <button class="button button-dark icon icon-left ion-ios-cart" ng-click="addToCart({{item}})">Add to cart</button>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
+
+<script id="image-modal.html" type="text/ng-template">
+  <div class="modal image-modal transparent" ng-click="closeModal()">
+    <ion-pane class="transparent">
+      <img ng-src="{{imageSrc}}" class="fullscreen-image"/>
+    </ion-pane>
+  </div>
+</script>

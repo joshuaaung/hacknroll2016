@@ -4,12 +4,14 @@ angular.module('starter.services', [])
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
+  /*
   var items = [{
     id: 0,
     name: 'Milk',
     description: 'Can drink',
     image: 'img/ben.png'
-  }/*{
+  }];*/
+  /*{
     id: 0,
     name: 'Ben Sparrow',
     lastText: 'You on your way?',
@@ -34,7 +36,7 @@ angular.module('starter.services', [])
     name: 'Mike Harrington',
     lastText: 'This is wicked good ice cream.',
     face: 'img/mike.png'
-  }*/];
+  }*/
 
   return {
     all: function() {
@@ -56,6 +58,7 @@ angular.module('starter.services', [])
       }
       value["id"] = key;
       $window.localStorage[key] = JSON.stringify(value);
+      console.log($window.localStorage);
     },
     get: function(key, defaultValue) {
       return JSON.parse($window.localStorage[key] || defaultValue);
@@ -96,4 +99,28 @@ angular.module('starter.services', [])
     }
     */
   };
+})
+
+.factory('CartItems', function($window, $rootScope) {
+  var items = [];
+
+  return {
+    /*
+    add: function(item) {
+      key = JSON.parse(item).id + JSON.parse(item).name.charCodeAt(2);;
+      $window.localStorage[key] = JSON.stringify(item);
+      console.log($window.localStorage[key]);
+    }
+    */
+    all: function() {
+      return items;
+    },
+    add: function(item, quantity) {
+      console.log(item);
+      item['qty'] = quantity;
+      items.push(item);
+      $rootScope.$broadcast('cart-updated'); //This broadcast an event named 'cart-updated'. Whichever controller listening to this event via child class of $rootScope which is $scope will Do Something upon this event
+      console.log(items);
+    }
+  }
 });

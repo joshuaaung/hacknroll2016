@@ -1,6 +1,7 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
     <h2>Welcome {{user.name}}</h2>
+
     <form ng-submit="AddItem(data)">
       <div class="list">
         <div class="list list-inset">
@@ -11,7 +12,7 @@
             <input type="text" placeholder="Item Description" ng-model="data.desc">
           </label>
           <label class="item item-input">
-            <input type="text" placeholder="Deal/Price" ng-model="data.price">
+            <input type="number" placeholder="Deal/Price" ng-model="data.price">
           </label>
           <label class="item item-input">
             <input type="text" placeholder="Location" ng-model="data.location">
@@ -33,5 +34,22 @@
     <button class="button button-block button-assertive" ng-controller="DashCtrl" ng-click="reset()">
       RESET
     </button>
+    <ion-list>
+      <!-- ng-class = "{'item-avatar':item.image}" will check if the item.image exists. If it doesnt, the avatar will be removed as well. Responsive-->
+      <!-- .item-remove-animate injects the delete animation when you're going to delete the item from the list-->
+      <ion-item ng-class = "{'item-avatar':item.image}" class="item-icon-right" ng-repeat="item in items | filter:searchBox" type="item-text-wrap" href="#/tab/items/{{item.id}}">
+        <img ng-src="{{item.image}}">
+        <h2>{{item.name}}</h2>
+        <p>{{item.description}}</p>
+        <p>{{item.price | currency: "S$"}}</p>
+        <p>{{item.expire}}</p>
+        <p>{{item.location}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

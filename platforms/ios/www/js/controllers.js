@@ -1,6 +1,30 @@
 angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-datepicker'])
 
-.controller('DashCtrl', function($scope, Items, ngFB) {
+.controller('TabsCtrl', function ($rootScope, $scope, $interval, Items, CartItems) {
+  $scope.data = {
+    cartItemsCount : 0
+  };
+  /* $interval runs occasionally(in this case every 50ms) and execute the function inside.
+  $interval(function updateCart() {
+    $rootScope.$on('cart-updated', function(e) { //$on listens for an event with the name specified
+      $scope.data.cartItemsCount = CartItems.length;
+    });
+  }, 50);
+*/
+  /*Updating the number shown in the badge on top of the Cart-tab*/
+  $scope.$on('cart-updated', function(e) {
+    $scope.data['cartItemsCount'] = CartItems.all().length;
+  });
+})
+
+.controller('ListCtrl', function ($rootScope, $scope) {
+  var list = [];
+  $scope.InsertNewKeyword = function (keyword) {
+    list.push(keyword);
+  };
+})
+
+.controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB) {
   ngFB.api({
     path: '/me',
     params: {fields: 'id,name'}
@@ -57,6 +81,8 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
   $scope.AddItem = function (data) {
     var bestBefore = $scope.datepickerObject["inputDate"].getDate() + "-" + ($scope.datepickerObject["inputDate"].getMonth() + 1) + "-" + $scope.datepickerObject["inputDate"].getFullYear();
+    
+    /*adding new item into the browse list*/
     var item = {
       name : data.name,
       description: data.desc,
@@ -70,10 +96,23 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
   $scope.reset = function () {
     Items.removeAll();
-  }
+  };
+
+  /*Displaying Cart Items*/
+  $scope.$on('$ionicView.enter', function(e){
+    $scope.items = CartItems.all();
+  });
+  /*
+  $scope.$on('cart-updated', function(e) { //$on listens for an event with the name specified
+    //$scope.cartItemsCount = CartItems.length;
+    console.log("123");
+  });
+*/
+  
 })
 
-.controller('ItemsCtrl', function($scope, $state, $ionicLoading, Items, ngFB) {
+.controller('ItemsCtrl', function ($rootScope, $scope, $state, $ionicLoading, Items, ngFB) {
+  
   ngFB.api({
     path: '/me',
     params: {fields: 'id,name'}
@@ -81,7 +120,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   function (user) {
     $scope.user = user;
   });
-
+  
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -93,6 +132,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   $scope.$on('$ionicView.enter', function(e) {
     $scope.items = Items.all();
   });
+  
   $scope.$on('$ionicView.beforeEnter', function(e) {
     $ionicLoading.show({
       templateUrl: 'templates/welcome.html',//'Authenticating...'
@@ -101,23 +141,100 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       duration: 2000
     });
   });
-
+  /*
+  $scope.$on('loggedin', function(e) {
+    $ionicLoading.show({
+      templateUrl: 'templates/welcome.html',
+      animation: 'fade-in',
+      scope: $scope,
+      duration: 2000
+    });
+  });
+  */
   $scope.remove = function(item) {
     Items.remove(item);
   };
 })
 
-.controller('ItemDetailCtrl', function($scope, $stateParams, Items) {
+.controller('ItemDetailCtrl', function ($rootScope, $scope, $stateParams, $ionicModal, Items, CartItems) {
   $scope.item = Items.get($stateParams.itemId, {});
+
+  /*To fire-up an enlarged Image-modal*/
+  $ionicModal.fromTemplateUrl('image-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hide', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+  $scope.$on('modal.shown', function() {
+    console.log('Modal is shown!');
+  });
+
+  $scope.imageSrc = '';
+
+  $scope.showImage = function(itemId) {
+    var itemObj = Items.get(itemId, 0);
+    $scope.imageSrc = itemObj.image;
+
+    $scope.openModal();
+  }
+
+  /*To Toggle the Quantity*/
+  $scope.item.quantity = ""; //Initial (default)
+  $scope.decreaseItem = function() {
+    if($scope.item.quantity > 0) {
+      $scope.item.quantity--;
+    } else {
+      $scope.item.quantity = ""; //To remove the digit from the input field
+    }
+  }; 
+
+  $scope.increaseItem = function() {
+    $scope.item.quantity++;
+  };
+
+  /*Item added to cart*/
+  $scope.addToCart = function(item) {
+    CartItems.add(item, $scope.item.quantity);
+    $scope.item.quantity = ""; //Set back the quantity to empty
+    $rootScope.$emit('cart-updated', {});
+    //$scope.$emit('cart-updated',{});  //$emit an event with the name specified
+  };
+  /*
+  $scope.$on('cart-updated', function(e){ //$on listens for an event with the name specified
+    console.log(CartItems.all());
+  });
+  */
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function ($scope) {
   $scope.settings = {
     enableFriends: true
   };
 })
 
-.controller('AppCtrl', function ($scope, $state, $ionicLoading, $timeout, $ionicModal, $timeout, ngFB) {
+.controller('AppCtrl', function ($rootScope, $scope, $state, $ionicLoading, $timeout, $ionicModal, $timeout, ngFB) {
   $scope.fbLogin = function () {
     $ionicLoading.show({
       template: '<p>Logging In..</p><ion-spinner icon="spiral"></ion-spinner>',
@@ -153,6 +270,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
           */
           setTimeout(function () {
             $scope.$apply(function () {
+              //$rootScope.$broadcast('loggedin');
               $state.go('tab.items');    
             });
           }, 2000);
