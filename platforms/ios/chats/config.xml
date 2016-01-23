@@ -21,6 +21,10 @@
     <feature name="InAppBrowser">
         <param name="ios-package" value="CDVInAppBrowser" />
     </feature>
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
+    <preference name="CameraUsesGeolocation" value="false" />
     <name>chats</name>
     <description>
         An Ionic Framework and Cordova project.

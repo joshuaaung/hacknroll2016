@@ -18,11 +18,17 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 })
 
 .controller('ListCtrl', function ($rootScope, $scope) {
-  var list = [];
   $scope.InsertNewKeyword = function (keyword) {
-    list.push(keyword);
+    ListItems.set(0, keyword);
     console.log('here');
   };
+
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.list = ListItems.all();
+  });
+
+
+
 })
 
 .controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB) {
