@@ -227,6 +227,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   };
 })
 
+.controller('ListCtrl', function () {
+  
+}
+
 .controller('AppCtrl', function ($rootScope, $scope, $state, $ionicLoading, $timeout, $ionicModal, $timeout, ngFB) {
   $scope.fbLogin = function () {
     $ionicLoading.show({
