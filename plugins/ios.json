@@ -12,6 +12,9 @@
         },
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.chats651108"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.chats651108"
         }
     },
     "dependent_plugins": {}

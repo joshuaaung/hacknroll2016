@@ -176,5 +176,7 @@
     </array>
     <key>UIStatusBarHidden</key>
     <false/>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string/>
   </dict>
 </plist>
