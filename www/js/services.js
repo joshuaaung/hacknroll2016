@@ -138,14 +138,20 @@ angular.module('starter.services', [])
     },
     add: function(item, quantity) {
       //console.log(item);
-      /*
+      var found = false;
       for(var i=0; i<items.length; i++) {
-        if()
-      }*/
-      item['qty'] = quantity;
+        if(items[i]._id == item._id) {
+          items[i]['qty'] += quantity;
+          found = true;
+          break;
+        }
+      }
+      if(!found) {
+        item['qty'] = quantity;
+        items.push(item);
+        $rootScope.$broadcast('cart-updated'); //This broadcast an event named 'cart-updated'. Whichever controller listening to this event via child class of $rootScope which is $scope will Do Something upon this event
+      }
       console.log(item);
-      items.push(item);
-      $rootScope.$broadcast('cart-updated'); //This broadcast an event named 'cart-updated'. Whichever controller listening to this event via child class of $rootScope which is $scope will Do Something upon this event
     }
   }
 })
