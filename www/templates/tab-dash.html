@@ -1,0 +1,37 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <h2>Welcome {{user.name}}</h2>
+    <form ng-submit="AddItem(data)">
+      <div class="list">
+        <div class="list list-inset">
+          <label class="item item-input">
+            <input type="text" placeholder="Item Name" ng-model="data.name">
+          </label>
+          <label class="item item-input">
+            <input type="text" placeholder="Item Description" ng-model="data.desc">
+          </label>
+          <label class="item item-input">
+            <input type="number" placeholder="Deal/Price" ng-model="data.price">
+          </label>
+          <label class="item item-input">
+            <input type="text" placeholder="Location" ng-model="data.location">
+          </label>
+          <label class="item item-input">
+            <input type="text" placeholder="Image" ng-model="data.imageUrl">
+          </label>
+
+        </div>
+        <button class="button button-block button-positive" type="submit">
+          Add Item
+        </button>
+      </div>
+    </form>
+    <h4>Expiry Date:  </h4>
+    <ionic-datepicker input-obj="datepickerObject">
+      <button class="button button-outline button-calm"> {{datepickerObject.inputDate | date:datepickerObject.dateFormat}}</button>
+    </ionic-datepicker>
+    <button class="button button-block button-assertive" ng-controller="DashCtrl" ng-click="reset()">
+      RESET
+    </button>
+  </ion-content>
+</ion-view>
