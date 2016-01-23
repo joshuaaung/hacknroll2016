@@ -1,0 +1,45 @@
+/* Empty. Add your own CSS if you like */
+.login-container {
+	/*font-family: "OpenSans-Regular";
+	src: url("../lib/OpenSansFont/OpenSans-Regular.ttf");*/
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    height: 100%;
+    margin-top: 30%;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efad62), color-stop(100%,#f7d47c));
+    background: -webkit-linear-gradient(top, #fff 0%,#fff 100%); /*#ef473a #f7d47c*/
+}
+
+.transparent {
+  background: transparent !important;
+}
+.image-modal {
+  width: 100% !important;
+  height: 100%;
+  top: 0 !important;
+  left: 0 !important;
+}
+.fullscreen-image {
+  max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+/* Fix modal backdrop for smaller devices */
+@media (max-width: 679px) {
+  .active .modal-backdrop-bg {
+    opacity: .5;
+  }
+  .modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0;
+  }
+}

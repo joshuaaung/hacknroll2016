@@ -1,0 +1,46 @@
+<ion-view view-title="Items">
+  <ion-header-bar class="bar bar-subheader">
+  <div class="item item-input-inset" style="border:none">
+    <label class="item-input-wrapper">
+      <i class="icon ion-search"></i>
+      <input style="text-align:center; width:100%" type="text" placeholder="by Name, Category, Store, BestBefore Date, etc" ng-model="searchBox">
+    </label>
+  </div>
+  </ion-header-bar>
+  <ion-content class="has-subheader">
+    <!--
+    <div class="item card-item">
+      <div ui-sref="app.gallery" class="card stable-bg ink ink-dark">
+        <div class="item item-avatar item-text-wrap">
+          <span class="avatar" style="background-image: url('img/jon-snow.jpg');"></span>
+          <strong>Jon Snow</strong> knows nothing.
+          <div class="card-footer text-right">
+            <i class="icon ion-chatbubbles positive"></i> 6
+            <i class="icon ion-heart assertive"></i> 23
+            <div class="pull-left">
+              <i class="icon ion-clock"></i> just now
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    -->
+    <ion-list>
+      <!-- ng-class = "{'item-avatar':item.image}" will check if the item.image exists. If it doesnt, the avatar will be removed as well. Responsive-->
+      <!-- .item-remove-animate injects the delete animation when you're going to delete the item from the list-->
+      <ion-item ng-class = "{'item-avatar':item.image}" class="item-icon-right" ng-repeat="item in items | filter:searchBox" type="item-text-wrap" href="#/tab/items/{{item.id}}">
+        <img ng-src="{{item.image}}">
+        <h2>{{item.name}}</h2>
+        <p>{{item.description}}</p>
+        <p>{{item.price | currency: "S$"}}</p>
+        <p>{{item.expire}}</p>
+        <p>{{item.location}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
