@@ -116,6 +116,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
   // if none of the above states are matched, use this as the fallback
   //This is also a way to set the first page when the app launches
-  $urlRouterProvider.otherwise('/list'); 
+  $urlRouterProvider.otherwise('/tab/dash'); 
 
 });

@@ -163,7 +163,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
       var jsonObject = JSON.parse(jsonString);
       console.log(jsonObject);
-      $scope.items = jsonObject.products;
       //handle_products(response);
 
     }, function errorCallback(resp) {
@@ -195,7 +194,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 })
 
 .controller('ItemDetailCtrl', function ($rootScope, $scope, $stateParams, $ionicModal, Items, CartItems) {
-  $scope.item = Items.get($stateParams.itemId, {});
+  //$scope.item = Items.get($stateParams.itemId, {});
 
   /*To fire-up an enlarged Image-modal*/
   $ionicModal.fromTemplateUrl('image-modal.html', {
