@@ -119,17 +119,19 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 })
 
 .controller('StoresCtrl', function($scope) {
-    var url = 'http://experiment.thewhiteconcept.com/hackandroll/nearby/your_lat/your_lon/radius_in_km';
-    $http({ 
-      method: 'GET', 
-      url: url
-    }).then(function successCallback(resp) {
-      var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
-      var jsonObject = JSON.parse(jsonString);
-      console.log(jsonObject);
+    $scope.$on('$ionicView.enter', function(e) {
+      var url = 'http://experiment.thewhiteconcept.com/hackandroll/nearby/your_lat/your_lon/radius_in_km';
+      $http({ 
+        method: 'GET', 
+        url: url
+      }).then(function successCallback(resp) {
+        var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+        var jsonObject = JSON.parse(jsonString);
+        console.log(jsonObject);
 
-    }, function errorCallback(resp) {
-      console.log('Fail', resp);
+      }, function errorCallback(resp) {
+        console.log('Fail', resp);
+      });
     });
 })
 
