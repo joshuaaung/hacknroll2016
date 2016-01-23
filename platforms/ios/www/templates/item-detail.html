@@ -4,24 +4,29 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{item.name}}">
+<ion-view view-title="{{item.product.product_name}}">
   <ion-content class="padding">
     <div class="row">
       <div class="col">
-        <img ng-src="{{item.image}}" style="width: 100px; height: 100px" ng-click="showImage({{item.id}})">
+        <img ng-src="{{itemImage}}" style="width: 100px; height: 100px" ng-click="showImage(item.product._id)">
       </div><!--col-->
       <div class="col col-67">
         <label class="item-wrapper">
           <i class="icon ion-pricetag"></i>
-          <span class="item-content">{{item.description}}</span>
+          <span class="item-content">{{item.product.product_brand}}</span>
         </label><br/>
         <label class="item-wrapper">
           <i class="icon ion-cash"></i>
-          <span class="item-content">{{item.price | currency: "S$"}}</span>
-        </label><br>
+          <span class="item-content" style="text-decoration: line-through;">{{item.product.original_price | currency: "S$"}}</span>
+          <span class="item-content" style=" color:red">{{item.product.sale_price | currency: "S$"}}</span>
+        </label><br/>
+        <label class="item-wrapper">
+          <i class="icon ion-calendar"></i>
+          <span class="item-content">{{item.product.expire_date}}</span>
+        </label><br/>
         <label class="item-wrapper">
           <i class="icon ion-location"></i>
-          <span class="item-content">{{item.location}}</span>
+          <span class="item-content">{{item.product.store_name}}</span>
         </label>
       </div><!--col-67-->
     </div><!--row-->
@@ -32,7 +37,7 @@
       </div><!--col-10-->
       <div class="col col-75">
         <label class="item-wrapper">
-          <input readonly="true" type="number" style="width:110%; text-align:center; padding:0" placeholder="Qty" ng-model="item.quantity">
+          <input readonly="true" type="number" style="width:110%; text-align:center; padding:0" placeholder="Qty" ng-model="quantity">
         </label>
       </div><!--col-75-->
       <div class="col col-10">
@@ -42,7 +47,7 @@
 
     <div class="row">
       <div class="col col-50">
-        <button class="button button-dark icon icon-left ion-ios-cart" ng-click="addToCart({{item}})">Add to cart</button>
+        <button class="button button-dark icon icon-left ion-ios-cart" ng-click="addToCart(item.product)">Add to cart</button>
       </div>
     </div>
   </ion-content>
