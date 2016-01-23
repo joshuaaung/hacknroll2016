@@ -1,5 +1,42 @@
 angular.module('starter.services', [])
 
+//.factory('ListItems', function($window)) {
+   /*return {
+    all: function() {
+      var values = [],
+        keys = Object.keys($window.localStorage),
+        i = keys.length;
+      while ( i-- ) {
+        values.push( JSON.parse($window.localStorage[i]) );
+      }
+      console.log(keys);
+      return values;
+    },
+    set: function(key, value) {
+      keys = Object.keys($window.localStorage);
+      if(keys.length != 0) {
+        key = parseInt(keys[keys.length-1]) + 1;    
+      } else {
+        key = 0;
+      }
+      value["id"] = key;
+      $window.localStorage[key] = JSON.stringify(value);
+      console.log($window.localStorage);
+    },
+    get: function(key, defaultValue) {
+      return JSON.parse($window.localStorage[key] || defaultValue);
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    },
+    removeAll: function() {
+      $window.localStorage.clear();
+    }*/
+//}
+
 .factory('Items', function($window) {
   // Might use a resource here that returns a JSON array
 

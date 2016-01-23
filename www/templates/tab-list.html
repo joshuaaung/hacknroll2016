@@ -1,18 +1,21 @@
 <ion-view view-title="Shopping List">
   <ion-content class="padding">
-    <!--<h2>{{user.name}}'s Shopping List</h2>-->
 
-    <form ng-submit="InsertNewKeyword(keyword)">
-      <div class="list">
-        <div class="list list-inset">
-          <label class="item item-input">
+  <ul class="list">
+    <li class="item" ng-repeat="keyword in list">{{keyword}}</li>
+  <ul>
+
+    <div class="list">
+      <form ng-submit="InsertNewKeyword(keyword)">
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
             <input type="text" placeholder="Item" ng-model="keyword">
           </label>
+          <button class="button button-light button-stable" type="submit">
+            Add
+          </button>
         </div>
-        <button class="button button-block button-positive" type="submit">
-          Add
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   </ion-content>
 </ion-view>

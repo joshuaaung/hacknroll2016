@@ -18,11 +18,14 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 })
 
 .controller('ListCtrl', function ($rootScope, $scope) {
-  var list = [];
+  $scope.list = ["Honey Stars", "Milk", "Ferrero Rocher"];
   $scope.InsertNewKeyword = function (keyword) {
     list.push(keyword);
     console.log('here');
   };
+
+
+
 })
 
 .controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB) {
