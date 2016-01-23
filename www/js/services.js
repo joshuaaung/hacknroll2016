@@ -48,7 +48,9 @@ angular.module('starter.services', [])
       }
       console.log(keys);
       return values;
-    },
+    }
+    /*
+    ,
     set: function(key, value) {
       keys = Object.keys($window.localStorage);
       if(keys.length != 0) {
@@ -72,6 +74,7 @@ angular.module('starter.services', [])
     removeAll: function() {
       $window.localStorage.clear();
     }
+    */
     /*
     all: function() {
       return items;
