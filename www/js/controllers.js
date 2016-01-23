@@ -129,7 +129,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     //Items.set(0 , item);
   };
 
-  $scope.$on('$ionicView.enter', function(e) {
+  $scope.$on('$ionicView.loaded', function(e) {
     var url = 'http://experiment.thewhiteconcept.com/hackandroll/user/store/1';
     $http({ 
       method: 'GET', 
