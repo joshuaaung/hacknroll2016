@@ -1,0 +1,11 @@
+/* Empty. Add your own CSS if you like */
+.login-container {
+	/*font-family: "OpenSans-Regular";
+	src: url("../lib/OpenSansFont/OpenSans-Regular.ttf");*/
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    height: 100%;
+    margin-top: 30%;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efad62), color-stop(100%,#f7d47c));
+    background: -webkit-linear-gradient(top, #fff 0%,#fff 100%); /*#ef473a #f7d47c*/
+}

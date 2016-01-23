@@ -1,0 +1,27 @@
+<ion-view view-title="Items">
+  <ion-header-bar class="bar bar-subheader">
+  <div class="item item-input-inset" style="border:none">
+    <label class="item-input-wrapper">
+      <i class="icon ion-search"></i>
+      <input style="text-align:center; width:100%" type="text" placeholder="by Name, Category, Store, BestBefore Date, etc" ng-model="searchBox">
+    </label>
+  </div>
+  </ion-header-bar>
+  <ion-content class="has-subheader">
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="item in items | filter:searchBox" type="item-text-wrap" href="#/tab/items/{{item.id}}">
+        <img ng-src="{{item.image}}">
+        <h2>{{item.name}}</h2>
+        <p>{{item.description}}</p>
+        <p>{{item.price}}</p>
+        <p>{{item.expire}}</p>
+        <p>{{item.location}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

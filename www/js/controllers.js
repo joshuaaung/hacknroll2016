@@ -91,6 +91,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     Items.removeAll();
   };
 
+  /*Displaying Cart Items*/
+  $scope.$on('$ionicView.enter', function(e){
+    $scope.items = CartItems.all();
+  });
   /*
   $scope.$on('cart-updated', function(e) { //$on listens for an event with the name specified
     //$scope.cartItemsCount = CartItems.length;
