@@ -118,6 +118,21 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   
 })
 
+.controller('StoresCtrl', function($scope) {
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/nearby/your_lat/your_lon/radius_in_km';
+    $http({ 
+      method: 'GET', 
+      url: url
+    }).then(function successCallback(resp) {
+      var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+      var jsonObject = JSON.parse(jsonString);
+      console.log(jsonObject);
+
+    }, function errorCallback(resp) {
+      console.log('Fail', resp);
+    });
+})
+
 .controller('ItemsCtrl', function ($rootScope, $scope, $http, $state, $ionicLoading, Items, ngFB) {
   
   ngFB.api({
