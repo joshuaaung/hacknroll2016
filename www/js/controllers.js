@@ -24,7 +24,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   };
 })
 
-.controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB) {
+.controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB, Camera) {
   ngFB.api({
     path: '/me',
     params: {fields: 'id,name'}
@@ -86,16 +86,31 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     var item = {
       name : data.name,
       description: data.desc,
-      price:data.price,
-      image: data.imageUrl,
+      price: data.price,
+      image: $scope.lastPhoto,//data.image,
       expire: bestBefore,
       location: data.location
     }
     Items.set(0 , item);
+    $scope.lastPhoto = null;
   };
 
   $scope.reset = function () {
     Items.removeAll();
+  };
+
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+      $scope.lastPhoto = imageURI;
+    }, function(err) {
+      console.err(err);
+    }, {
+      quality: 75,
+      targetWidth: 320,
+      targetHeight: 320,
+      saveToPhotoAlbum: true
+    });
   };
 
   /*Displaying Cart Items*/
