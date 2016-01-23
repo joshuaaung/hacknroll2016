@@ -17,7 +17,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   });
 })
 
-.controller('DashCtrl', function ($rootScope, $scope, $interval, $ionicView, Items, CartItems, ngFB) {
+.controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB) {
   ngFB.api({
     path: '/me',
     params: {fields: 'id,name'}
