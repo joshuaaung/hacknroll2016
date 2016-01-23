@@ -21,6 +21,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   var list = [];
   $scope.InsertNewKeyword = function (keyword) {
     list.push(keyword);
+    console.log('here');
   };
 })
 
