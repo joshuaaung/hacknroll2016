@@ -18,13 +18,20 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 })
 
 .controller('ListCtrl', function ($rootScope, $scope) {
-  var list = [];
   $scope.InsertNewKeyword = function (keyword) {
-    list.push(keyword);
+    ListItems.set(0, keyword);
+    console.log('here');
   };
+
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.list = ListItems.all();
+  });
+
+
+
 })
 
-.controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB) {
+.controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB, Camera) {
   ngFB.api({
     path: '/me',
     params: {fields: 'id,name'}
@@ -87,7 +94,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       name : data.name,
       description: data.desc,
       price:data.price,
-      image: data.imageUrl,
+      image: $scope.lastPhoto,
       expire: bestBefore,
       location: data.location
     }
@@ -97,6 +104,31 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   $scope.reset = function () {
     Items.removeAll();
   };
+
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+      $scope.lastPhoto = imageURI;
+    }, function(err) {
+      console.err(err);
+    }, {
+      quality: 75,
+      targetWidth: 320,
+      targetHeight: 320,
+      saveToPhotoAlbum: true
+    });
+  };
+
+  $scope.loadDoc = function() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+        document.getElementById("demo").innerHTML = xhttp.responseText;
+      }
+    };
+    xhttp.open("GET", "http://experiment.thewhiteconcept.com/hackandroll/product/", true);
+    xhttp.send();
+  }
 
   /*Displaying Cart Items*/
   $scope.$on('$ionicView.enter', function(e){
@@ -111,7 +143,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   
 })
 
-.controller('ItemsCtrl', function ($rootScope, $scope, $state, $ionicLoading, Items, ngFB) {
+.controller('ItemsCtrl', function ($rootScope, $scope, $http, $state, $ionicLoading, Items, ngFB) {
   
   ngFB.api({
     path: '/me',
@@ -130,9 +162,39 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     $ionicView.beforeEnter' will load first before entering to the page
   */
   $scope.$on('$ionicView.enter', function(e) {
-    $scope.items = Items.all();
+    //$scope.items = Items.all();
+    /*
+    $http({
+      method: 'GET',
+      url: 'http://experiment.thewhiteconcept.com/hackandroll/product/',
+      crossDomain : true,
+    }).then(function successCallback(response) {
+      // this callback will be called asynchronously
+      // when the response is available
+    }, function errorCallback(response) {
+      // called asynchronously if an error occurs
+      // or server returns response with an error status.
+    });
+    */
+    /* GOT CROSS-SITE DOMAIN ERROR */
+    //$http.get('http://experiment.thewhiteconcept.com/hackandroll/product/').then(function(resp) {
+    //  console.log('Success', resp);
+    //});
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/product/';
+    $http({ 
+      method: 'GET', 
+      url: url
+    }).then(function successCallback(resp) {
+      var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+      var jsonObject = JSON.parse(jsonString);
+      console.log(jsonObject);
+      //handle_products(response);
+
+    }, function errorCallback(resp) {
+      console.log('Fail', resp);
+    });
   });
-  
+
   $scope.$on('$ionicView.beforeEnter', function(e) {
     $ionicLoading.show({
       templateUrl: 'templates/welcome.html',//'Authenticating...'
@@ -157,7 +219,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 })
 
 .controller('ItemDetailCtrl', function ($rootScope, $scope, $stateParams, $ionicModal, Items, CartItems) {
-  $scope.item = Items.get($stateParams.itemId, {});
+  //$scope.item = Items.get($stateParams.itemId, {});
 
   /*To fire-up an enlarged Image-modal*/
   $ionicModal.fromTemplateUrl('image-modal.html', {

@@ -1,5 +1,23 @@
 angular.module('starter.services', [])
 
+.factory('Camera', ['$q', function($q) {
+ 
+  return {
+    getPicture: function(options) {
+      var q = $q.defer();
+      
+      navigator.camera.getPicture(function(result) {
+        // Do any magic you need
+        q.resolve(result);
+      }, function(err) {
+        q.reject(err);
+      }, options);
+      
+      return q.promise;
+    }
+  }
+}])
+
 .factory('Items', function($window) {
   // Might use a resource here that returns a JSON array
 
@@ -48,7 +66,9 @@ angular.module('starter.services', [])
       }
       console.log(keys);
       return values;
-    },
+    }
+    /*
+    ,
     set: function(key, value) {
       keys = Object.keys($window.localStorage);
       if(keys.length != 0) {
@@ -72,6 +92,7 @@ angular.module('starter.services', [])
     removeAll: function() {
       $window.localStorage.clear();
     }
+    */
     /*
     all: function() {
       return items;
@@ -116,11 +137,53 @@ angular.module('starter.services', [])
       return items;
     },
     add: function(item, quantity) {
-      console.log(item);
+      //console.log(item);
+      /*
+      for(var i=0; i<items.length; i++) {
+        if()
+      }*/
       item['qty'] = quantity;
       items.push(item);
       $rootScope.$broadcast('cart-updated'); //This broadcast an event named 'cart-updated'. Whichever controller listening to this event via child class of $rootScope which is $scope will Do Something upon this event
       console.log(items);
     }
   }
-});
+})
+
+.factory('ListItems', function($window) {
+   return {
+    all: function() {
+      var values = [],
+        keys = Object.keys($window.localStorage),
+        i = keys.length;
+      while ( i-- ) {
+        values.push( JSON.parse($window.localStorage[i]) );
+      }
+      console.log(keys);
+      return values;
+    },
+    set: function(key, value) {
+      keys = Object.keys($window.localStorage);
+      if(keys.length != 0) {
+        key = parseInt(keys[keys.length-1]) + 1;    
+      } else {
+        key = 0;
+      }
+      value["id"] = key;
+      $window.localStorage[key] = JSON.stringify(value);
+      console.log($window.localStorage);
+    },
+    get: function(key, defaultValue) {
+      return JSON.parse($window.localStorage[key] || defaultValue);
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    },
+    removeAll: function() {
+      $window.localStorage.clear();
+    }
+  }
+})

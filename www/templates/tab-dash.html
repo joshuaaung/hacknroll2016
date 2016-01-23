@@ -1,15 +1,19 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
     <h2>Welcome {{user.name}}</h2>
-
+    <p id="demo"></p>
     <form ng-submit="AddItem(data)">
       <div class="list">
+        <img ng-src="{{lastPhoto}}" style="max-width: 100%">
         <div class="list list-inset">
+          <label class="item item-input">
+            <input type="text" placeholder="Item Brand" ng-model="data.desc">
+          </label>
           <label class="item item-input">
             <input type="text" placeholder="Item Name" ng-model="data.name">
           </label>
           <label class="item item-input">
-            <input type="text" placeholder="Item Description" ng-model="data.desc">
+            <input type="number" placeholder="Quantity" ng-model="data.quantity">
           </label>
           <label class="item item-input">
             <input type="number" placeholder="Deal/Price" ng-model="data.price">
@@ -17,11 +21,11 @@
           <label class="item item-input">
             <input type="text" placeholder="Location" ng-model="data.location">
           </label>
-          <label class="item item-input">
-            <input type="text" placeholder="Image" ng-model="data.imageUrl">
-          </label>
 
         </div>
+        <button ng-click="getPhoto()" class="button button-block button-primary">
+          Take Photo
+        </button>
         <button class="button button-block button-positive" type="submit">
           Add Item
         </button>

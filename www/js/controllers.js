@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
 })
 
-.controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB) {
+.controller('DashCtrl', function ($rootScope, $scope, $interval, $http, Items, CartItems, ngFB, Camera) {
   ngFB.api({
     path: '/me',
     params: {fields: 'id,name'}
@@ -87,22 +87,59 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   };
 
   $scope.AddItem = function (data) {
-    var bestBefore = $scope.datepickerObject["inputDate"].getDate() + "-" + ($scope.datepickerObject["inputDate"].getMonth() + 1) + "-" + $scope.datepickerObject["inputDate"].getFullYear();
+    var bestBefore = $scope.datepickerObject["inputDate"].getFullYear() + "-" + 
+                    ($scope.datepickerObject["inputDate"].getMonth() + 1) + "-" + 
+                     $scope.datepickerObject["inputDate"].getDate();
     
     /*adding new item into the browse list*/
-    var item = {
-      name : data.name,
-      description: data.desc,
-      price:data.price,
-      image: data.imageUrl,
-      expire: bestBefore,
-      location: data.location
-    }
-    Items.set(0 , item);
+    var json = JSON.stringify({
+            product_name: data.name,
+            product_brand: data.desc,
+            sku: 1234567890,
+            quantity: data.quantity,
+            original_price: data.price,
+            sale_price: data.price,
+            expire_date: bestBefore,
+            start_date: bestBefore,
+            end_date: bestBefore
+        });
+
+    $http({
+      method: 'POST',
+      url: 'http://experiment.thewhiteconcept.com/hackandroll/product/',
+      data: json,
+      dataType:'JSONP'
+
+  }).then(function successCallback(response) {
+    console.log("success", response);
+    // this callback will be called asynchronously
+    // when the response is available
+  }, function errorCallback(response) {
+    console.log("fail");
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+  });
+
+    //$http.post("", json);
+    //Items.set(0 , item);
   };
 
   $scope.reset = function () {
     Items.removeAll();
+  };
+
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+      $scope.lastPhoto = imageURI;
+    }, function(err) {
+      console.err(err);
+    }, {
+      quality: 75,
+      targetWidth: 320,
+      targetHeight: 320,
+      saveToPhotoAlbum: true
+    });
   };
 
   /*Displaying Cart Items*/
