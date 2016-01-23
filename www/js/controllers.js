@@ -18,11 +18,14 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 })
 
 .controller('ListCtrl', function ($rootScope, $scope) {
-  $scope.list = ["Honey Stars", "Milk", "Ferrero Rocher"];
   $scope.InsertNewKeyword = function (keyword) {
-    list.push(keyword);
+    ListItems.set(0, keyword);
     console.log('here');
   };
+
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.list = ListItems.all();
+  });
 
 
 

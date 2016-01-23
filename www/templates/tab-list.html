@@ -1,8 +1,10 @@
 <ion-view view-title="Shopping List">
-  <ion-content class="padding">
+  <ion-header-bar class="bar bar-subheader">
 
   <ul class="list">
-    <li class="item" ng-repeat="keyword in list">{{keyword}}</li>
+    <ion-item ng-repeat="keyword in list">
+          <p>{{keyword}}</p>
+    </ion-item>
   <ul>
 
     <div class="list">
@@ -17,5 +19,5 @@
         </div>
       </form>
     </div>
-  </ion-content>
+  </ion-header>
 </ion-view>
