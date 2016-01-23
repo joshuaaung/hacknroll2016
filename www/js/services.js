@@ -115,10 +115,12 @@ angular.module('starter.services', [])
     all: function() {
       return items;
     },
-    add: function(item) {
+    add: function(item, quantity) {
+      console.log(item);
+      item['qty'] = quantity;
       items.push(item);
       $rootScope.$broadcast('cart-updated'); //This broadcast an event named 'cart-updated'. Whichever controller listening to this event via child class of $rootScope which is $scope will Do Something upon this event
-      //console.log(items);
+      console.log(items);
     }
   }
 });

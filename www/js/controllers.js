@@ -74,6 +74,8 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
   $scope.AddItem = function (data) {
     var bestBefore = $scope.datepickerObject["inputDate"].getDate() + "-" + ($scope.datepickerObject["inputDate"].getMonth() + 1) + "-" + $scope.datepickerObject["inputDate"].getFullYear();
+    
+    /*adding new item into the browse list*/
     var item = {
       name : data.name,
       description: data.desc,
@@ -203,7 +205,8 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
   /*Item added to cart*/
   $scope.addToCart = function(item) {
-    CartItems.add(item);
+    CartItems.add(item, $scope.item.quantity);
+    $scope.item.quantity = ""; //Set back the quantity to empty
     $rootScope.$emit('cart-updated', {});
     //$scope.$emit('cart-updated',{});  //$emit an event with the name specified
   };
