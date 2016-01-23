@@ -99,6 +99,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller: 'ListCtrl'
       }
     }*/
+  })
+
+  .state('stores', {
+    url: '/stores',
+    controller: 'StoresCtrl',
+    templateUrl: 'templates/tab-stores.html'
   });
 
   // if none of the above states are matched, use this as the fallback

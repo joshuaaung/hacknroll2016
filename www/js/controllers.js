@@ -118,6 +118,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   
 })
 
+.controller('StoresCtrl', function ($scope) {
+})
+
 .controller('ItemsCtrl', function ($rootScope, $scope, $state, $ionicLoading, Items, ngFB) {
   
   ngFB.api({
