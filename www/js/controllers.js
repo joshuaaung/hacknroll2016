@@ -17,6 +17,13 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   });
 })
 
+.controller('ListCtrl', function ($rootScope, $scope) {
+  var list = [];
+  $scope.InsertNewKeyword = function (keyword) {
+    list.push(keyword);
+  };
+})
+
 .controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB) {
   ngFB.api({
     path: '/me',
@@ -226,10 +233,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     enableFriends: true
   };
 })
-
-.controller('ListCtrl', function () {
-  
-}
 
 .controller('AppCtrl', function ($rootScope, $scope, $state, $ionicLoading, $timeout, $ionicModal, $timeout, ngFB) {
   $scope.fbLogin = function () {
