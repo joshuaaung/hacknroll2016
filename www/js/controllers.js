@@ -137,39 +137,40 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     $ionicView.beforeEnter' will load first before entering to the page
   */
   $scope.$on('$ionicView.enter', function(e) {
-+    //$scope.items = Items.all();
-+    /*
-+    $http({
-+      method: 'GET',
-+      url: 'http://experiment.thewhiteconcept.com/hackandroll/product/',
-+      crossDomain : true,
-+    }).then(function successCallback(response) {
-+      // this callback will be called asynchronously
-+      // when the response is available
-+    }, function errorCallback(response) {
-+      // called asynchronously if an error occurs
-+      // or server returns response with an error status.
-+    });
-+    */
-+    /* GOT CROSS-SITE DOMAIN ERROR */
-+    //$http.get('http://experiment.thewhiteconcept.com/hackandroll/product/').then(function(resp) {
-+    //  console.log('Success', resp);
-+    //});
-+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/product/';
-+    $http({ 
-+      method: 'GET', 
-+      url: url
-+    }).then(function successCallback(resp) {
-+      var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
-+      var jsonObject = JSON.parse(jsonString);
-+      console.log(jsonObject);
-+      $scope.items = jsonObject.products;
-+      //handle_products(response);
-+
-+    }, function errorCallback(resp) {
-+      console.log('Fail', resp);
-+    });  });
-  
+    //$scope.items = Items.all();
+    /*
+    $http({
+      method: 'GET',
+      url: 'http://experiment.thewhiteconcept.com/hackandroll/product/',
+      crossDomain : true,
+    }).then(function successCallback(response) {
+      // this callback will be called asynchronously
+      // when the response is available
+    }, function errorCallback(response) {
+      // called asynchronously if an error occurs
+      // or server returns response with an error status.
+    });
+    */
+    /* GOT CROSS-SITE DOMAIN ERROR */
+    //$http.get('http://experiment.thewhiteconcept.com/hackandroll/product/').then(function(resp) {
+    //  console.log('Success', resp);
+    //});
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/product/';
+    $http({ 
+      method: 'GET', 
+      url: url
+    }).then(function successCallback(resp) {
+      var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+      var jsonObject = JSON.parse(jsonString);
+      console.log(jsonObject);
+      $scope.items = jsonObject.products;
+      //handle_products(response);
+
+    }, function errorCallback(resp) {
+      console.log('Fail', resp);
+    });
+  });
+
   $scope.$on('$ionicView.beforeEnter', function(e) {
     $ionicLoading.show({
       templateUrl: 'templates/welcome.html',//'Authenticating...'

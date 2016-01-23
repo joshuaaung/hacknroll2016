@@ -29,14 +29,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
-+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
--   +  /*
-+  $httpProvider.defaults.useXDomain = true;
-+  $httpProvider.defaults.withCredentials = true;
-+  delete $httpProvider.defaults.headers.common["X-Requested-With"];
-+  $httpProvider.defaults.headers.common["Accept"] = "application/json";
-+  $httpProvider.defaults.headers.common["Content-Type"] = "application/json";  
-+  */  
+
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  /*
+  $httpProvider.defaults.useXDomain = true;
+  $httpProvider.defaults.withCredentials = true;
+  delete $httpProvider.defaults.headers.common["X-Requested-With"];
+  $httpProvider.defaults.headers.common["Accept"] = "application/json";
+  $httpProvider.defaults.headers.common["Content-Type"] = "application/json";  
+  */
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -94,7 +95,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-  
+
   .state('list', {
     url: '/list',
     controller: 'ListCtrl',
