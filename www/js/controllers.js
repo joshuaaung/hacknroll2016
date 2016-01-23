@@ -119,7 +119,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   $scope.$on('$ionicView.enter', function(e) {
     $scope.items = Items.all();
   });
-  /*
+  
   $scope.$on('$ionicView.beforeEnter', function(e) {
     $ionicLoading.show({
       templateUrl: 'templates/welcome.html',//'Authenticating...'
@@ -128,7 +128,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       duration: 2000
     });
   });
-  */
+  /*
   $scope.$on('loggedin', function(e) {
     $ionicLoading.show({
       templateUrl: 'templates/welcome.html',
@@ -137,7 +137,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       duration: 2000
     });
   });
-
+  */
   $scope.remove = function(item) {
     Items.remove(item);
   };
@@ -256,7 +256,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
           */
           setTimeout(function () {
             $scope.$apply(function () {
-              $rootScope.$broadcast('loggedin');
+              //$rootScope.$broadcast('loggedin');
               $state.go('tab.items');    
             });
           }, 2000);
