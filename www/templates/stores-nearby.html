@@ -1,4 +1,4 @@
-<ion-view view-title="Browse Stores">
+<ion-view view-title="Nearby Stores">
   <ion-content class="padding">
 	<ion-list>
 		<ion-item ng-class = "{'item-avatar':store.store.image_url}" class="item-icon-right" ng-repeat="store in stores" type="item-text-wrap"href="#/stores/{{store.store._id}}">
@@ -9,4 +9,5 @@
 			<i class="icon ion-chevron-right icon-accessory"></i>
 		</ion-item>
 	</ion-list>
+  </ion-content>
 </ion-view>

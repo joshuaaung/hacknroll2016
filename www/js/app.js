@@ -128,6 +128,12 @@ angular.module('starter', ['ionic',/*'ionic.service.core',*/ 'starter.controller
     controller: 'PaymentCtrl'
   })
 
+  .state('nearby-stores', {
+    url: '/nearby',
+    controller: 'NearbyStoresCtrl',
+    templateUrl: 'templates/stores-nearby.html'
+  })
+
   .state('stores', {
     url: '/stores',
     controller: 'StoresCtrl',
