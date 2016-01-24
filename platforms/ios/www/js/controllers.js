@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
 })
 
-.controller('DashCtrl', function ($rootScope, $scope, $interval, $ionicModal, $ionicPopup, $http, CartItems, ngFB, Camera) {
+.controller('DashCtrl', function ($rootScope, $scope, $interval, $http, Items, CartItems, ngFB, Camera) {
   ngFB.api({
     path: '/me',
     params: {fields: 'id,name'}
@@ -96,7 +96,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
     /*adding new item into the browse list*/
     var json = JSON.stringify({
+<<<<<<< HEAD
+=======
             user_id: 1,
+>>>>>>> cf0606815369fa37fd3d1d46e7eb7883aae5982f
             product_name: data.name,
             product_brand: data.desc,
             sku: 1234567890,
@@ -105,8 +108,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
             sale_price: data.price,
             expire_date: bestBefore,
             start_date: bestBefore,
+<<<<<<< HEAD
+            end_date: bestBefore
+=======
             end_date: bestBefore,
             store_id: storeid
+>>>>>>> cf0606815369fa37fd3d1d46e7eb7883aae5982f
         });
 
     $http({
@@ -119,17 +126,25 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     console.log("success", response);
     // this callback will be called asynchronously
     // when the response is available
+<<<<<<< HEAD
+  }, function errorCallback(response) {
+    console.log("fail");
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+  });
+=======
     }, function errorCallback(response) {
     console.log("fail");
     // called asynchronously if an error occurs
     // or server returns response with an error status.
     });
+>>>>>>> cf0606815369fa37fd3d1d46e7eb7883aae5982f
 
     //$http.post("", json);
     //Items.set(0 , item);
   };
 
-  $scope.$on('$ionicView.loaded', function(e) {
+  $scope.$on('$ionicView.enter', function(e) {
     var url = 'http://experiment.thewhiteconcept.com/hackandroll/user/store/1';
     $http({ 
       method: 'GET', 
@@ -174,80 +189,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   /*Displaying Cart Items*/
   $scope.$on('$ionicView.enter', function(e){
     $scope.items = CartItems.all();
-
-    var imgArray = [];
-    for(var i=0; i<$scope.items.length; i++) {
-      imgArray.push('http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+$scope.items[i]._id+'.png');
-    }
-    $scope.imgArray = imgArray;
   });
-
-  /*To fire-up an enlarged Image-modal*/
-  $ionicModal.fromTemplateUrl('image-modal.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
-
-  $scope.openModal = function() {
-    $scope.modal.show();
-  };
-
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-  };
-
-  //Cleanup the modal when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
-  // Execute action on hide modal
-  $scope.$on('modal.hide', function() {
-    // Execute action
-  });
-  // Execute action on remove modal
-  $scope.$on('modal.removed', function() {
-    // Execute action
-  });
-  $scope.$on('modal.shown', function() {
-    console.log('Modal is shown!');
-  });
-
-  $scope.imageSrc = '';
-
-  $scope.showImage = function(itemId) {
-    console.log(itemId);
-    $scope.imageSrc = 'http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+itemId+'.png';
-
-    $scope.openModal();
-  }
-
-  /*Edit the Cart Item*/ 
-  $scope.edit = function(item) {
-    $ionicPopup.show({
-      template: '<p>Specify new quantity</p>',
-      title: 'Edit Item Quantity',
-      //subTitle: 'Please use normal things',
-      scope: $scope,
-      buttons: [
-        //{ text: 'Cancel' },
-        {
-          text: '<b>Okay!</b>',
-          type: 'button-calm',
-          /*
-          onTap: function(e) {
-            if (!$scope.data.wifi) {
-            //don't allow the user to close unless he enters wifi password
-            e.preventDefault();
-          } else {
-            return $scope.data.wifi;
-          }
-          */
-        }
-      ]
-    });
-  }
   /*
   $scope.$on('cart-updated', function(e) { //$on listens for an event with the name specified
     //$scope.cartItemsCount = CartItems.length;
@@ -350,9 +292,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     });
   });
   */
+  $scope.remove = function(item) {
+    Items.remove(item);
+  };
 })
 
-.controller('ItemDetailCtrl', function ($rootScope, $scope, $http, $stateParams, $ionicModal, $ionicPopup, Items, CartItems) {
+.controller('ItemDetailCtrl', function ($rootScope, $scope, $http, $stateParams, $ionicModal, Items, CartItems) {
   var url = 'http://experiment.thewhiteconcept.com/hackandroll/product/'+$stateParams.itemId;
   $http({ 
     method: 'GET', 
@@ -426,35 +371,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
   /*Item added to cart*/
   $scope.addToCart = function(item) {
-    if($scope.quantity == "") {
-      $ionicPopup.show({
-        template: '<p>Please Specify the Quantity</p>',
-        title: 'Quantity Empty',
-        //subTitle: 'Please use normal things',
-        scope: $scope,
-        buttons: [
-          //{ text: 'Cancel' },
-          {
-            text: '<b>Okay!</b>',
-            type: 'button-calm',
-            /*
-            onTap: function(e) {
-              if (!$scope.data.wifi) {
-              //don't allow the user to close unless he enters wifi password
-              e.preventDefault();
-            } else {
-              return $scope.data.wifi;
-            }
-            */
-          }
-        ]
-      });
-    } else {
-      CartItems.add(item, $scope.quantity);
-      $scope.quantity = ""; //Set back the quantity to empty
-      //$rootScope.$emit('cart-updated', {});
-      //$scope.$emit('cart-updated',{});  //$emit an event with the name specified
-    }
+    CartItems.add(item, $scope.quantity);
+    $scope.quantity = ""; //Set back the quantity to empty
+    //$rootScope.$emit('cart-updated', {});
+    //$scope.$emit('cart-updated',{});  //$emit an event with the name specified
   };
   /*
   $scope.$on('cart-updated', function(e){ //$on listens for an event with the name specified

@@ -1,0 +1,12 @@
+<ion-view view-title="Browse Stores">
+  <ion-header-bar class="bar bar-subheader">
+	<ion-list>
+		<ion-item ng-class = "{'item-avatar':store.store.image_url}" class="item-icon-right" ng-repeat="store in stores" type="item-text-wrap"href="#/stores/{{store.store._id}}">
+			<img ng-src="{{store.store.image_url}}">
+			<h2>{{store.store.store_name}}</h2>
+			<p>{{store.store.description}}</p>
+			<p>{{store.store.store_address}}</p>
+		</ion-item>
+	</ion-list>
+  </ion-header-bar>
+</ion-view>
