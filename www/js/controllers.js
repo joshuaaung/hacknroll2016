@@ -272,9 +272,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   
 })
 
-.controller('StoresCtrl', function($scope, $http) {
+.controller('NearbyStoresCtrl', function($scope, $http) {
   $scope.$on('$ionicView.enter', function(e) {
-    var url = 'http://experiment.thewhiteconcept.com/hackandroll/store/nearby/1.295472/103.773700/6';
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/store/nearby/1.295472/103.773700/2';
     $http({ 
       method: 'GET', 
       url: url
@@ -282,7 +282,25 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
       var jsonObject = JSON.parse(jsonString);
       $scope.stores = jsonObject.stores;
-      console.log(jsonObject.stores);
+      //console.log(jsonObject.stores);
+      console.log($scope.stores);
+    }, function errorCallback(resp) {
+      console.log('Fail', resp);
+    });
+  });
+})
+
+.controller('StoresCtrl', function($scope, $http) {
+  $scope.$on('$ionicView.enter', function(e) {
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/store';
+    $http({ 
+      method: 'GET', 
+      url: url
+    }).then(function successCallback(resp) {
+      var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+      var jsonObject = JSON.parse(jsonString);
+      $scope.stores = jsonObject.stores;
+      //console.log(jsonObject.stores);
       console.log($scope.stores);
     }, function errorCallback(resp) {
       console.log('Fail', resp);
