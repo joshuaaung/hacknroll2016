@@ -3,6 +3,9 @@
   <ion-header-bar class="bar bar-subheader">
     <div class="item item-input-inset">
       <h3>Total Price: {{totalPrice | currency:"S$"}}</h3>
+      <button class="button button- button-positive" ng-click="makePayment()">
+        CheckOut
+      </button>
     </div>
   </ion-header-bar>
   <ion-content class="padding has-subheader">

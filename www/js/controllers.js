@@ -257,6 +257,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       ]
     });
   }
+
+  /*Make Payment*/
+  $scope.makePayment = function() {
+    var paypal = require('paypal-rest-sdk');
+    console.log(paypal);
+  }
   /*
   $scope.$on('cart-updated', function(e) { //$on listens for an event with the name specified
     //$scope.cartItemsCount = CartItems.length;
