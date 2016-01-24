@@ -286,6 +286,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   */
 })
 
+.controller('StoreDetailCtrl', function ($scope) {
+  
+})
+
 .controller('AccountCtrl', function ($scope) {
   $scope.settings = {
     enableFriends: true

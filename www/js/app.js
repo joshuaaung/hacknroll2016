@@ -86,6 +86,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+
+  .state('store-detail', {
+    url: '/stores/:storeId',
+    controller: 'StoreDetailCtrl',
+    templateUrl: 'templates/store-detail.html'
+  })
+
   .state('tab.account', {
     url: '/account',
     views: {
