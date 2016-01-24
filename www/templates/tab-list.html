@@ -1,23 +1,27 @@
-<ion-view view-title="Shopping List">
+<ion-view view-title="Follow Shops">
   <ion-header-bar class="bar bar-subheader">
-
-  <ul class="list">
-    <ion-item ng-repeat="keyword in list">
-          <p>{{keyword}}</p>
+  </ion-header>
+  <ion-list>
+    <ion-item ng-class="{'item-avatar':Store.store.image_url}" class="item-icon-right" ng-repeat="Store in favouriteList" type="item-text-wrap">
+      <img ng-src="{{Store.store.image_url}}">
+      <h3>{{Store.store.store_name}}</h3><br/>
+      <h3>{{Store.store.store_address}}</h3><br/>
+      <h3>{{Store.store.description}}</h3><br/>
+      <button class="ng-class:buttonColor" on-tap="onTap()">FOLLOW</button>
     </ion-item>
-  <ul>
-
+  </ion-list>
+<!--
     <div class="list">
       <form ng-submit="InsertNewKeyword(keyword)">
         <div class="item item-input-inset">
           <label class="item-input-wrapper">
             <input type="text" placeholder="Item" ng-model="keyword">
           </label>
-          <button class="button button-light button-stable" type="submit">
+          <button class="button button-outline button-balanced">
             Add
           </button>
         </div>
       </form>
     </div>
-  </ion-header>
+-->
 </ion-view>

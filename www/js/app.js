@@ -123,6 +123,8 @@ angular.module('starter', ['ionic',/*'ionic.service.core',*/ 'starter.controller
     }*/
   })
 
+<<<<<<< HEAD
+=======
   .state('charge', {
     url: '/charge',
     controller: 'PaymentCtrl'
@@ -134,6 +136,7 @@ angular.module('starter', ['ionic',/*'ionic.service.core',*/ 'starter.controller
     templateUrl: 'templates/stores-nearby.html'
   })
 
+>>>>>>> 2fcd6bbad428dd47c103561e943d3b10a7537cdf
   .state('stores', {
     url: '/stores',
     controller: 'StoresCtrl',
