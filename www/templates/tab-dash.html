@@ -1,6 +1,12 @@
-<ion-view view-title="Dashboard">
-  <ion-content class="padding">
-    <h2>Welcome {{user.name}}</h2>
+<ion-view view-title="Cart">
+  <h2>Welcome {{user.name}}</h2>
+  <ion-header-bar class="bar bar-subheader">
+    <div class="item item-input-inset">
+      <h3>Total Price: {{totalPrice | currency:"S$"}}</h3>
+    </div>
+  </ion-header-bar>
+  <ion-content class="padding has-subheader">
+    <!--
     <p id="demo"></p>
     <form ng-submit="AddItem(data)">
       <div class="list">
@@ -38,7 +44,7 @@
     </ionic-datepicker>
     <button class="button button-block button-assertive" ng-controller="DashCtrl" ng-click="reset()">
       RESET
-    </button>
+    </button> -->
     <ion-list>
       <!-- ng-class = "{'item-avatar':item.image}" will check if the item.image exists. If it doesnt, the avatar will be removed as well. Responsive-->
       <!-- .item-remove-animate injects the delete animation when you're going to delete the item from the list-->

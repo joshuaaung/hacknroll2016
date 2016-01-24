@@ -86,6 +86,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     closeOnSelect: false, //Optional
   };
 
+  /*
   $scope.AddItem = function (data) {
     var bestBefore = $scope.datepickerObject["inputDate"].getFullYear() + "-" + 
                     ($scope.datepickerObject["inputDate"].getMonth() + 1) + "-" + 
@@ -95,6 +96,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     var storeid = stores.options[stores.selectedIndex].id;
 
     /*adding new item into the browse list*/
+    /*
     var json = JSON.stringify({
             user_id: 1,
             product_name: data.name,
@@ -128,14 +130,21 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     //$http.post("", json);
     //Items.set(0 , item);
   };
+*/
 
+<<<<<<< HEAD
+  /*WEI KIT*/
+  /*
+  $scope.$on('$ionicView.enter', function(e) {
+=======
   $scope.$on('$ionicView.loaded', function(e) {
+>>>>>>> 055c02cd4c8cd086bcb843de54635f3e9a525481
     var url = 'http://experiment.thewhiteconcept.com/hackandroll/user/store/1';
     $http({ 
       method: 'GET', 
       url: url
     }).then(function successCallback(resp) {
-      console.log(resp);
+      //console.log(resp);
       var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
       var jsonObject = JSON.parse(jsonString);
       console.log(jsonObject.stores);
@@ -156,7 +165,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   $scope.reset = function () {
     Items.removeAll();
   };
-
+  
   $scope.getPhoto = function() {
     Camera.getPicture().then(function(imageURI) {
       console.log(imageURI);
@@ -170,16 +179,18 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       saveToPhotoAlbum: true
     });
   };
+  */
 
   /*Displaying Cart Items*/
   $scope.$on('$ionicView.enter', function(e){
     $scope.items = CartItems.all();
-
+    console.log($scope.items);
     var imgArray = [];
     for(var i=0; i<$scope.items.length; i++) {
       imgArray.push('http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+$scope.items[i]._id+'.png');
     }
     $scope.imgArray = imgArray;
+    $scope.totalPrice = CartItems.getTotalPrice();
   });
 
   /*To fire-up an enlarged Image-modal*/
@@ -358,7 +369,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     method: 'GET', 
     url: url
   }).then(function successCallback(resp) {
-    console.log(resp);
+    console.log('Success',resp);
     var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
     var jsonObject = JSON.parse(jsonString);
     //console.log(jsonObject.products);
@@ -450,6 +461,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
         ]
       });
     } else {
+      console.log('Added to cart', item);
       CartItems.add(item, $scope.quantity);
       $scope.quantity = ""; //Set back the quantity to empty
       //$rootScope.$emit('cart-updated', {});
