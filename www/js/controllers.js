@@ -62,7 +62,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 */
 })
 
-.controller('DashCtrl', function ($rootScope, $scope, $interval, $ionicModal, $ionicPopup, $http, CartItems, ngFB, Camera) {
+.controller('DashCtrl', function ($rootScope, $scope, $state, $interval, $ionicModal, $ionicPopup, $http, CartItems, ngFB, Camera) {
   ngFB.api({
     path: '/me',
     params: {fields: 'id,name'}
@@ -291,8 +291,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
   /*Make Payment*/
   $scope.makePayment = function() {
+    $state.go('tab.payment');
+    /*
     var paypal = require('paypal-rest-sdk');
     console.log(paypal);
+    */
   }
   /*
   $scope.$on('cart-updated', function(e) { //$on listens for an event with the name specified
@@ -301,6 +304,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   });
 */
   
+})
+
+.controller('PaymentCtrl', function ($rootScope, $scope, $state, $interval, Items, CartItems) {
+  $scope.onTap = function() {
+    $state.go('tab.items');
+  }
 })
 
 .controller('NearbyStoresCtrl', function($scope, $http) {

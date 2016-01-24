@@ -76,6 +76,16 @@ angular.module('starter', ['ionic',/*'ionic.service.core',*/ 'starter.controller
     }
   })
 
+  .state('tab.payment', {
+    url: '/payment',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/dash-payment.html',
+        controller: 'PaymentCtrl'
+      }
+    }
+  })
+
   .state('tab.items', {
     url: '/items',
     views: {
