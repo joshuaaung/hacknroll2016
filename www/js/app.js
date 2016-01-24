@@ -123,11 +123,6 @@ angular.module('starter', ['ionic',/*'ionic.service.core',*/ 'starter.controller
     }*/
   })
 
-  .state('charge', {
-    url: '/charge',
-    controller: 'PaymentCtrl'
-  })
-
   .state('stores', {
     url: '/stores',
     controller: 'StoresCtrl',

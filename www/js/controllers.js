@@ -17,18 +17,45 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   });
 })
 
-.controller('ListCtrl', function ($rootScope, $scope) {
+.controller('ListCtrl', function ($rootScope, $scope, $http) {
+  var url = 'http://experiment.thewhiteconcept.com/hackandroll/user/follow/3';
+
+  $http({ 
+    method: 'GET', 
+    url: url
+  }).then(function successCallback(resp) {
+    var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+    var jsonObject = JSON.parse(jsonString);
+
+    var tempArray = [];
+    tempArray.push(jsonObject.stores[0]);
+    $scope.favouriteList = tempArray;
+    //console.log(jsonObject.stores);
+
+    //console.log(jsonObject.stores);
+    //console.log($scope.favouriteList);
+  }, function errorCallback(resp) {
+    console.log('Fail', resp);
+  });
+
+  $scope.buttonColor = "button button-balanced button-block button-outline";
+  $scope.onTap = function(itemId) {
+    if($scope.buttonColor == "button button-balanced button-block button-stable")
+      $scope.buttonColor = "button button-balanced button-block button-outline";
+    else
+      $scope.buttonColor = "button button-balanced button-block button-stable";
+  }
+
+  /*
   $scope.InsertNewKeyword = function (keyword) {
     ListItems.set(0, keyword);
     console.log('here');
   };
-
+  
   $scope.$on('$ionicView.enter', function(e) {
     $scope.list = ListItems.all();
   });
-
-
-
+*/
 })
 
 .controller('DashCtrl', function ($rootScope, $scope, $interval, $ionicModal, $ionicPopup, $http, CartItems, ngFB, Camera) {
