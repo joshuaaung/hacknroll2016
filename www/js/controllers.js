@@ -132,13 +132,11 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   };
 */
 
-<<<<<<< HEAD
   /*WEI KIT*/
   /*
   $scope.$on('$ionicView.enter', function(e) {
-=======
+
   $scope.$on('$ionicView.loaded', function(e) {
->>>>>>> 055c02cd4c8cd086bcb843de54635f3e9a525481
     var url = 'http://experiment.thewhiteconcept.com/hackandroll/user/store/1';
     $http({ 
       method: 'GET', 
