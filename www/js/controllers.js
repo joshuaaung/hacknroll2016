@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-datepicker'])
 
-.controller('TabsCtrl', function ($rootScope, $scope, $interval, Items, CartItems) {
+.controller('TabsCtrl', function ($rootScope, $scope, $state, $interval, Items, CartItems) {
   $scope.data = {
     cartItemsCount : 0
   };
@@ -15,6 +15,10 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   $scope.$on('cart-updated', function(e) {
     $scope.data['cartItemsCount'] = CartItems.all().length;
   });
+
+  $scope.onTap = function() {
+    $state.go('tab.items');
+  }
 })
 
 .controller('ListCtrl', function ($rootScope, $scope, $http) {
@@ -382,6 +386,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       var jsonObject = JSON.parse(jsonString);
       console.log(jsonObject.products);
       $scope.items = jsonObject.products;
+      console.log($scope.items);
 
       var imgArray = [];
       for(var i=0; i<jsonObject.products.length; i++) {
@@ -563,7 +568,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   */
 })
 
-.controller('AccountCtrl', function ($scope) {
+.controller('AccountCtrl', function ($scope, $state) {
   $scope.settings = {
     enableFriends: true
   };
