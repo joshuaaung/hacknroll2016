@@ -1,2 +1,35 @@
-<ion-view view-title="{{store_name}}">
+<ion-view view-title="{{store.store.store_name}}">
+	<ion-content class="padding">
+
+	<!-- header -->
+	<div class="card">
+  		<div class="item item-text-wrap">
+
+			<div class="row">
+				<img ng-src="{{store.store.image_url}}" style="width: 100px; height: 100px" ng-click="showImage(store.store._id)">
+				<div class="col">
+					<div class="col col-67">
+						<label class="item-wrapper">
+							<h1>{{store.store.store_name}}</h1>
+						</label>
+
+						<label class="item-wrapper">
+							{{store.store.description}}<br>
+						</label>
+
+				        <label class="item-wrapper">
+				          <i class="icon ion-location"></i>
+				          <span class="item-content">{{store.store.store_address}}</span>
+				        </label><br/>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- body -->
+	
+
+
+	</ion-content>
 </ion-view>

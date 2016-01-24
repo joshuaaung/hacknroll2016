@@ -267,10 +267,8 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 })
 
 .controller('StoresCtrl', function($scope, $http) {
-  $scope.test = ["Hello", "from", "the other side"];
-
   $scope.$on('$ionicView.enter', function(e) {
-    var url = 'http://experiment.thewhiteconcept.com/hackandroll/store/nearby/1.295472/103.773700/10';
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/store/nearby/1.295472/103.773700/6';
     $http({ 
       method: 'GET', 
       url: url
@@ -280,7 +278,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       $scope.stores = jsonObject.stores;
       console.log(jsonObject.stores);
       console.log($scope.stores);
-
     }, function errorCallback(resp) {
       console.log('Fail', resp);
     });
@@ -365,8 +362,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   */
 })
 
-.controller('ItemDetailCtrl', function ($rootScope, $scope, $http, $stateParams, $ionicModal, $ionicPopup, Items, CartItems) {
-  var url = 'http://experiment.thewhiteconcept.com/hackandroll/product/'+$stateParams.itemId;
+.controller('StoreDetailCtrl', function ($scope, $stateParams, $http) {
+  //console.log($stateParams.storeId);
+ var url = 'http://experiment.thewhiteconcept.com/hackandroll/store/'+$stateParams.storeId;
   $http({ 
     method: 'GET', 
     url: url
@@ -374,9 +372,41 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     console.log('Success',resp);
     var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
     var jsonObject = JSON.parse(jsonString);
-    //console.log(jsonObject.products);
+    $scope.store = jsonObject.stores[0];
+    console.log(jsonObject.stores);
+    console.log($scope.store);
+  }, function errorCallback(resp) {
+    console.log('Fail', resp);
+  });
+
+  var url = 'http://experiment.thewhiteconcept.com/hackandroll/product/location/'+$stateParams.storeId;
+  $http({ 
+    method: 'GET', 
+    url: url
+  }).then(function successCallback(resp) {
+    console.log('Success',resp);
+    var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+    var jsonObject = JSON.parse(jsonString);
+    $scope.items = jsonObject;
+    console.log(jsonObject.stores);
+    console.log($scope.store);
+  }, function errorCallback(resp) {
+    console.log('Fail', resp);
+  });
+})
+
+.controller('ItemDetailCtrl', function ($rootScope, $scope, $http, $stateParams, $ionicModal, $ionicPopup, Items, CartItems) {
+  var url = 'http://experiment.thewhiteconcept.com/hackandroll/product/'+$stateParams.itemId;
+  $http({ 
+    method: 'GET', 
+    url: url
+  }).then(function successCallback(resp) {
+    //console.log('Success',resp);
+    var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+    var jsonObject = JSON.parse(jsonString);
+    console.log(jsonObject.products);
     $scope.item = jsonObject.products[0];
-    //console.log($scope.item);
+    console.log($scope.item);
     $scope.itemImage = 'http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+jsonObject.products[0].product._id+'.png';
   }, function errorCallback(resp) {
     console.log('Fail', resp);
@@ -475,10 +505,6 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     console.log(CartItems.all());
   });
   */
-})
-
-.controller('StoreDetailCtrl', function ($scope) {
-  
 })
 
 .controller('AccountCtrl', function ($scope) {
