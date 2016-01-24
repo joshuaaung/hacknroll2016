@@ -1,5 +1,23 @@
 angular.module('starter.services', [])
 
+.factory('Camera', ['$q', function($q) {
+ 
+  return {
+    getPicture: function(options) {
+      var q = $q.defer();
+      
+      navigator.camera.getPicture(function(result) {
+        // Do any magic you need
+        q.resolve(result);
+      }, function(err) {
+        q.reject(err);
+      }, options);
+      
+      return q.promise;
+    }
+  }
+}])
+
 .factory('Items', function($window) {
   // Might use a resource here that returns a JSON array
 
@@ -120,14 +138,26 @@ angular.module('starter.services', [])
     },
     add: function(item, quantity) {
       //console.log(item);
-      /*
+      var found = false;
       for(var i=0; i<items.length; i++) {
-        if()
-      }*/
-      item['qty'] = quantity;
-      items.push(item);
-      $rootScope.$broadcast('cart-updated'); //This broadcast an event named 'cart-updated'. Whichever controller listening to this event via child class of $rootScope which is $scope will Do Something upon this event
-      console.log(items);
+        if(items[i]._id == item._id) {
+          items[i]['qty'] += quantity;
+          found = true;
+          break;
+        }
+      }
+      if(!found) {
+        item['qty'] = quantity;
+        items.push(item);
+        $rootScope.$broadcast('cart-updated'); //This broadcast an event named 'cart-updated'. Whichever controller listening to this event via child class of $rootScope which is $scope will Do Something upon this event
+      }
+    },
+    getTotalPrice: function() {
+      var price = 0;
+      for(var i=0; i<items.length; i++) {
+        price+= (items[i].sale_price * items[i].qty);
+      }
+      return price;
     }
   }
 })

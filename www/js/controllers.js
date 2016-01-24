@@ -31,7 +31,7 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
 
 })
 
-.controller('DashCtrl', function ($rootScope, $scope, $interval, Items, CartItems, ngFB) {
+.controller('DashCtrl', function ($rootScope, $scope, $interval, $ionicModal, $ionicPopup, $http, CartItems, ngFB, Camera) {
   ngFB.api({
     path: '/me',
     params: {fields: 'id,name'}
@@ -86,29 +86,177 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     closeOnSelect: false, //Optional
   };
 
+  /*
   $scope.AddItem = function (data) {
-    var bestBefore = $scope.datepickerObject["inputDate"].getDate() + "-" + ($scope.datepickerObject["inputDate"].getMonth() + 1) + "-" + $scope.datepickerObject["inputDate"].getFullYear();
+    var bestBefore = $scope.datepickerObject["inputDate"].getFullYear() + "-" + 
+                    ($scope.datepickerObject["inputDate"].getMonth() + 1) + "-" + 
+                     $scope.datepickerObject["inputDate"].getDate();
     
+    var stores = document.getElementById("stores");
+    var storeid = stores.options[stores.selectedIndex].id;
+
     /*adding new item into the browse list*/
-    var item = {
-      name : data.name,
-      description: data.desc,
-      price:data.price,
-      image: data.imageUrl,
-      expire: bestBefore,
-      location: data.location
-    }
-    Items.set(0 , item);
+    /*
+    var json = JSON.stringify({
+            user_id: 1,
+            product_name: data.name,
+            product_brand: data.desc,
+            sku: 1234567890,
+            quantity: data.quantity,
+            original_price: data.price,
+            sale_price: data.price,
+            expire_date: bestBefore,
+            start_date: bestBefore,
+            end_date: bestBefore,
+            store_id: storeid
+        });
+
+    $http({
+      method: 'POST',
+      url: 'http://experiment.thewhiteconcept.com/hackandroll/product/',
+      data: json,
+      dataType:'JSONP'
+
+  }).then(function successCallback(response) {
+    console.log("success", response);
+    // this callback will be called asynchronously
+    // when the response is available
+    }, function errorCallback(response) {
+    console.log("fail");
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    });
+
+    //$http.post("", json);
+    //Items.set(0 , item);
   };
+*/
+
+  /*WEI KIT*/
+  /*
+  $scope.$on('$ionicView.enter', function(e) {
+
+  $scope.$on('$ionicView.loaded', function(e) {
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/user/store/1';
+    $http({ 
+      method: 'GET', 
+      url: url
+    }).then(function successCallback(resp) {
+      //console.log(resp);
+      var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+      var jsonObject = JSON.parse(jsonString);
+      console.log(jsonObject.stores);
+      $scope.items = jsonObject.stores;
+
+      var select = document.getElementById("stores");
+      for(var i=0; i<jsonObject.stores.length; i++) {
+        var store = document.createElement("option");
+        store.id = jsonObject.stores[i].store._id;
+        store.innerHTML = jsonObject.stores[i].store.store_name;
+        select.appendChild(store);
+      }
+    }, function errorCallback(resp) {
+      console.log('Fail', resp);
+    });
+  });
 
   $scope.reset = function () {
     Items.removeAll();
   };
+  
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+      $scope.lastPhoto = imageURI;
+    }, function(err) {
+      console.err(err);
+    }, {
+      quality: 75,
+      targetWidth: 320,
+      targetHeight: 320,
+      saveToPhotoAlbum: true
+    });
+  };
+  */
 
   /*Displaying Cart Items*/
   $scope.$on('$ionicView.enter', function(e){
     $scope.items = CartItems.all();
+    console.log($scope.items);
+    var imgArray = [];
+    for(var i=0; i<$scope.items.length; i++) {
+      imgArray.push('http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+$scope.items[i]._id+'.png');
+    }
+    $scope.imgArray = imgArray;
+    $scope.totalPrice = CartItems.getTotalPrice();
   });
+
+  /*To fire-up an enlarged Image-modal*/
+  $ionicModal.fromTemplateUrl('image-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hide', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+  $scope.$on('modal.shown', function() {
+    console.log('Modal is shown!');
+  });
+
+  $scope.imageSrc = '';
+
+  $scope.showImage = function(itemId) {
+    console.log(itemId);
+    $scope.imageSrc = 'http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+itemId+'.png';
+
+    $scope.openModal();
+  }
+
+  /*Edit the Cart Item*/ 
+  $scope.edit = function(item) {
+    $ionicPopup.show({
+      template: '<p>Specify new quantity</p>',
+      title: 'Edit Item Quantity',
+      //subTitle: 'Please use normal things',
+      scope: $scope,
+      buttons: [
+        //{ text: 'Cancel' },
+        {
+          text: '<b>Okay!</b>',
+          type: 'button-calm',
+          /*
+          onTap: function(e) {
+            if (!$scope.data.wifi) {
+            //don't allow the user to close unless he enters wifi password
+            e.preventDefault();
+          } else {
+            return $scope.data.wifi;
+          }
+          */
+        }
+      ]
+    });
+  }
   /*
   $scope.$on('cart-updated', function(e) { //$on listens for an event with the name specified
     //$scope.cartItemsCount = CartItems.length;
@@ -181,11 +329,17 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       method: 'GET', 
       url: url
     }).then(function successCallback(resp) {
+      console.log(resp);
       var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
       var jsonObject = JSON.parse(jsonString);
-      console.log(jsonObject);
-      //handle_products(response);
+      console.log(jsonObject.products);
+      $scope.items = jsonObject.products;
 
+      var imgArray = [];
+      for(var i=0; i<jsonObject.products.length; i++) {
+        imgArray.push('http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+jsonObject.products[i].product._id+'.png');
+      }
+      $scope.imgArray = imgArray;
     }, function errorCallback(resp) {
       console.log('Fail', resp);
     });
@@ -209,13 +363,24 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     });
   });
   */
-  $scope.remove = function(item) {
-    Items.remove(item);
-  };
 })
 
-.controller('ItemDetailCtrl', function ($rootScope, $scope, $stateParams, $ionicModal, Items, CartItems) {
-  //$scope.item = Items.get($stateParams.itemId, {});
+.controller('ItemDetailCtrl', function ($rootScope, $scope, $http, $stateParams, $ionicModal, $ionicPopup, Items, CartItems) {
+  var url = 'http://experiment.thewhiteconcept.com/hackandroll/product/'+$stateParams.itemId;
+  $http({ 
+    method: 'GET', 
+    url: url
+  }).then(function successCallback(resp) {
+    console.log('Success',resp);
+    var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+    var jsonObject = JSON.parse(jsonString);
+    //console.log(jsonObject.products);
+    $scope.item = jsonObject.products[0];
+    //console.log($scope.item);
+    $scope.itemImage = 'http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+jsonObject.products[0].product._id+'.png';
+  }, function errorCallback(resp) {
+    console.log('Fail', resp);
+  });
 
   /*To fire-up an enlarged Image-modal*/
   $ionicModal.fromTemplateUrl('image-modal.html', {
@@ -252,32 +417,58 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   $scope.imageSrc = '';
 
   $scope.showImage = function(itemId) {
-    var itemObj = Items.get(itemId, 0);
-    $scope.imageSrc = itemObj.image;
+    console.log(itemId);
+    $scope.imageSrc = 'http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+itemId+'.png';
 
     $scope.openModal();
   }
 
   /*To Toggle the Quantity*/
-  $scope.item.quantity = ""; //Initial (default)
+  $scope.quantity = ""; //Initial (default)
   $scope.decreaseItem = function() {
-    if($scope.item.quantity > 0) {
-      $scope.item.quantity--;
+    if($scope.quantity > 0) {
+      $scope.quantity--;
     } else {
-      $scope.item.quantity = ""; //To remove the digit from the input field
+      $scope.quantity = ""; //To remove the digit from the input field
     }
   }; 
 
   $scope.increaseItem = function() {
-    $scope.item.quantity++;
+    $scope.quantity++;
   };
 
   /*Item added to cart*/
   $scope.addToCart = function(item) {
-    CartItems.add(item, $scope.item.quantity);
-    $scope.item.quantity = ""; //Set back the quantity to empty
-    $rootScope.$emit('cart-updated', {});
-    //$scope.$emit('cart-updated',{});  //$emit an event with the name specified
+    if($scope.quantity == "") {
+      $ionicPopup.show({
+        template: '<p>Please Specify the Quantity</p>',
+        title: 'Quantity Empty',
+        //subTitle: 'Please use normal things',
+        scope: $scope,
+        buttons: [
+          //{ text: 'Cancel' },
+          {
+            text: '<b>Okay!</b>',
+            type: 'button-calm',
+            /*
+            onTap: function(e) {
+              if (!$scope.data.wifi) {
+              //don't allow the user to close unless he enters wifi password
+              e.preventDefault();
+            } else {
+              return $scope.data.wifi;
+            }
+            */
+          }
+        ]
+      });
+    } else {
+      console.log('Added to cart', item);
+      CartItems.add(item, $scope.quantity);
+      $scope.quantity = ""; //Set back the quantity to empty
+      //$rootScope.$emit('cart-updated', {});
+      //$scope.$emit('cart-updated',{});  //$emit an event with the name specified
+    }
   };
   /*
   $scope.$on('cart-updated', function(e){ //$on listens for an event with the name specified

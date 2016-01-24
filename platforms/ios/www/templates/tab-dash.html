@@ -1,27 +1,32 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
     <h2>Welcome {{user.name}}</h2>
-
+    <p id="demo"></p>
     <form ng-submit="AddItem(data)">
       <div class="list">
+        <img ng-src="{{lastPhoto}}" style="max-width: 100%">
         <div class="list list-inset">
+          <label class="item item-input">
+            <input type="text" placeholder="Item Brand" ng-model="data.desc">
+          </label>
           <label class="item item-input">
             <input type="text" placeholder="Item Name" ng-model="data.name">
           </label>
           <label class="item item-input">
-            <input type="text" placeholder="Item Description" ng-model="data.desc">
+            <input type="number" placeholder="Quantity" ng-model="data.quantity">
           </label>
           <label class="item item-input">
             <input type="number" placeholder="Deal/Price" ng-model="data.price">
           </label>
           <label class="item item-input">
-            <input type="text" placeholder="Location" ng-model="data.location">
-          </label>
-          <label class="item item-input">
-            <input type="text" placeholder="Image" ng-model="data.imageUrl">
+            <select id="stores">
+            </select>
           </label>
 
         </div>
+        <button ng-click="getPhoto()" class="button button-block button-primary">
+          Take Photo
+        </button>
         <button class="button button-block button-positive" type="submit">
           Add Item
         </button>
@@ -37,19 +42,31 @@
     <ion-list>
       <!-- ng-class = "{'item-avatar':item.image}" will check if the item.image exists. If it doesnt, the avatar will be removed as well. Responsive-->
       <!-- .item-remove-animate injects the delete animation when you're going to delete the item from the list-->
-      <ion-item ng-class = "{'item-avatar':item.image}" class="item-icon-right" ng-repeat="item in items | filter:searchBox" type="item-text-wrap" href="#/tab/items/{{item.id}}">
-        <img ng-src="{{item.image}}">
-        <h2>{{item.name}}</h2>
-        <p>{{item.description}}</p>
-        <p>{{item.price | currency: "S$"}}</p>
-        <p>{{item.expire}}</p>
-        <p>{{item.location}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+      <ion-item ng-class = "{'item-avatar':imgArray[$index]}" class="item-icon-right" ng-repeat="item in items" type="item-text-wrap"> <!-- href="#/tab/items/{{item._id}}"> -->
+        <img ng-src="{{imgArray[$index]}}" ng-click="showImage(item._id)">
+        <h2>{{item.product_name}}</h2>
+        <p>{{item.product_brand}}</p>
+        <p>{{item.original_price | currency: "S$"}}</p>
+        <p>{{item.sale_price| currency: "S$"}}</p>
+        <p>{{item.expire_date}}</p>
+        <p>{{item.store_name}}</p>
+        <span class="badge badge-royal" style="margin-top:10%">In-Cart: {{item.qty}}</span>
+        
+        <ion-option-button class="button-calm" ng-click="edit(item)">
+          Edit
+        </ion-option-button>
+        <ion-option-button class="button-assertive" ng-click="remove(item)">
           Delete
         </ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
+
+<script id="image-modal.html" type="text/ng-template">
+  <div class="modal image-modal transparent" ng-click="closeModal()">
+    <ion-pane class="transparent">
+      <img ng-src="{{imageSrc}}" class="fullscreen-image"/>
+    </ion-pane>
+  </div>
+</script>

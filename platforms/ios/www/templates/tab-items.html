@@ -28,14 +28,16 @@
     <ion-list>
       <!-- ng-class = "{'item-avatar':item.image}" will check if the item.image exists. If it doesnt, the avatar will be removed as well. Responsive-->
       <!-- .item-remove-animate injects the delete animation when you're going to delete the item from the list-->
-      <ion-item ng-class = "{'item-avatar':item.image}" class="item-icon-right" ng-repeat="item in items | filter:searchBox" type="item-text-wrap" href="#/tab/items/{{item.id}}">
-        <img ng-src="{{item.image}}">
-        <h2>{{item.name}}</h2>
-        <p>{{item.description}}</p>
-        <p>{{item.price | currency: "S$"}}</p>
-        <p>{{item.expire}}</p>
-        <p>{{item.location}}</p>
+      <ion-item ng-class = "{'item-avatar':imgArray[$index]}" class="item-icon-right" ng-repeat="item in items | filter:searchBox" type="item-text-wrap" href="#/tab/items/{{item.product._id}}">
+        <img ng-src="{{imgArray[$index]}}">
+        <h2>{{item.product.product_name}}</h2>
+        <p>{{item.product.product_brand}}</p>
+        <p>{{item.product.original_price | currency: "S$"}}</p>
+        <p>{{item.product.sale_price| currency: "S$"}}</p> 
+        <p>{{item.product.expire_date}}</p>
+        <p>{{item.product.store_name}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
+        <i class="badge badge-royal">Quantity Left: {{item.product.quantity}}</i>
 
         <ion-option-button class="button-assertive" ng-click="remove(chat)">
           Delete
