@@ -299,9 +299,9 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
   
 })
 
-.controller('StoresCtrl', function($scope, $http) {
+.controller('NearbyStoresCtrl', function($scope, $http) {
   $scope.$on('$ionicView.enter', function(e) {
-    var url = 'http://experiment.thewhiteconcept.com/hackandroll/store/nearby/1.295472/103.773700/6';
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/store/nearby/1.295472/103.773700/2';
     $http({ 
       method: 'GET', 
       url: url
@@ -309,7 +309,25 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
       var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
       var jsonObject = JSON.parse(jsonString);
       $scope.stores = jsonObject.stores;
-      console.log(jsonObject.stores);
+      //console.log(jsonObject.stores);
+      console.log($scope.stores);
+    }, function errorCallback(resp) {
+      console.log('Fail', resp);
+    });
+  });
+})
+
+.controller('StoresCtrl', function($scope, $http) {
+  $scope.$on('$ionicView.enter', function(e) {
+    var url = 'http://experiment.thewhiteconcept.com/hackandroll/store';
+    $http({ 
+      method: 'GET', 
+      url: url
+    }).then(function successCallback(resp) {
+      var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
+      var jsonObject = JSON.parse(jsonString);
+      $scope.stores = jsonObject.stores;
+      //console.log(jsonObject.stores);
       console.log($scope.stores);
     }, function errorCallback(resp) {
       console.log('Fail', resp);
@@ -402,12 +420,12 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     method: 'GET', 
     url: url
   }).then(function successCallback(resp) {
-    console.log('Success',resp);
+    //console.log('Success',resp);
     var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
     var jsonObject = JSON.parse(jsonString);
     $scope.store = jsonObject.stores[0];
-    console.log(jsonObject.stores);
-    console.log($scope.store);
+    //console.log(jsonObject.stores);
+    //console.log($scope.store);
   }, function errorCallback(resp) {
     console.log('Fail', resp);
   });
@@ -420,9 +438,14 @@ angular.module('starter.controllers', ['starter.services', 'ngOpenFB', 'ionic-da
     console.log('Success',resp);
     var jsonString = resp.data.substring(1, resp.data.length-1); //remove the first '(' and last ')' from the JSONP string
     var jsonObject = JSON.parse(jsonString);
-    $scope.items = jsonObject;
-    console.log(jsonObject.stores);
-    console.log($scope.store);
+    $scope.items = jsonObject.products;
+    var imgArray = [];
+      for(var i=0; i<jsonObject.products.length; i++) {
+        imgArray.push('http://experiment.thewhiteconcept.com/hackandroll/access/images/products/'+jsonObject.products[i].product._id+'.png');
+      }
+    $scope.imgArray = imgArray;
+    console.log(jsonObject);
+    console.log($scope.items);
   }, function errorCallback(resp) {
     console.log('Fail', resp);
   });

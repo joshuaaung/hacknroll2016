@@ -28,7 +28,25 @@
 	</div>
 
 	<!-- body -->
-	
+
+   <ion-list>
+      <ion-item ng-class = "{'item-avatar':imgArray[$index]}" class="item-icon-right" ng-repeat="item in items" type="item-text-wrap" href="#/tab/items/{{item.product._id}}">
+        <img ng-src="{{imgArray[$index]}}">
+        <h2>{{item.product.product_name}}</h2>
+        <p>{{item.product.product_brand}}</p>
+        <p>{{item.product.original_price | currency: "S$"}}</p>
+        <p>{{item.product.sale_price| currency: "S$"}}</p> 
+        <p>{{item.product.expire_date}}</p>
+        <p>{{item.product.store_name}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+        <i class="badge badge-royal">Quantity Left: {{item.product.quantity}}</i>
+
+        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+
 
 
 	</ion-content>
